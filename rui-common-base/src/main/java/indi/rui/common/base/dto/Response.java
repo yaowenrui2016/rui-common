@@ -1,7 +1,6 @@
 package indi.rui.common.base.dto;
 
 
-import indi.rui.common.base.Status;
 import lombok.Getter;
 import lombok.Setter;
 

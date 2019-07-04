@@ -1,4 +1,4 @@
-package indi.rui.common.base;
+package indi.rui.common.base.dto;
 
 /**
  * yaowr
