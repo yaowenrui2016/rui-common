@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>indi.rui</groupId>
 	<artifactId>common-web</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>common-web</name>
 	<description>web</description>
 
@@ -19,6 +19,11 @@
 	</properties>
 
 	<dependencies>
+		<dependency>
+			<groupId>indi.rui</groupId>
+			<artifactId>common-base</artifactId>
+			<version>0.0.1</version>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>

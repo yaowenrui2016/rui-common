@@ -1,0 +1,5 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+    indi.rui.common.web.config.GlobalFileterConfiguration,\
+    indi.rui.common.web.config.MultiDataSourceConfiguration,\
+    indi.rui.common.web.config.SqlSessionFactoryConfiguration
+
