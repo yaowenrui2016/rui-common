@@ -15,7 +15,6 @@ import static org.springframework.core.io.support.ResourcePatternResolver.CLASSP
 
 @Configuration
 public class SqlSessionFactoryConfiguration {
-
     @Bean
     @ConditionalOnBean(value = DataSource.class, name = "serviceDataSource")
     public SqlSessionFactory sqlSessionFactory(@Qualifier("serviceDataSource") DataSource dataSource) throws Exception {
