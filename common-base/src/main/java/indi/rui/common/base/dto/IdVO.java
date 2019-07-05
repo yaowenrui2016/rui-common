@@ -1,13 +1,11 @@
 package indi.rui.common.base.dto;
 
 import indi.rui.common.base.field.IFieldId;
-import indi.rui.common.base.field.IFieldName;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public abstract class BaseEntity implements IFieldId, IFieldName {
+public class IdVO implements IFieldId {
     private String id;
-    private String name;
 }

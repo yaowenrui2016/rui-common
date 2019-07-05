@@ -1,4 +1,4 @@
-package indi.rui.common.base.dto.field;
+package indi.rui.common.base.field;
 
 public interface IFieldName {
     String getName();

@@ -1,7 +1,7 @@
 package indi.rui.common.base.dto;
 
-import indi.rui.common.base.dto.field.IFieldId;
-import indi.rui.common.base.dto.field.IFieldName;
+import indi.rui.common.base.field.IFieldId;
+import indi.rui.common.base.field.IFieldName;
 import lombok.Getter;
 import lombok.Setter;
 

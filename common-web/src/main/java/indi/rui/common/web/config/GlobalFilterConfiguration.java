@@ -45,7 +45,8 @@ public class GlobalFilterConfiguration {
             String uri = request.getRequestURI();
             String remoteHost = request.getRemoteHost();
             String queryString = request.getQueryString();
-            log.info("↓↓↓↓ Request from [{}] >>> {} ", remoteHost, method + " " + uri + queryString == null ? "": "?" + queryString);
+            String queryLinge =  method + " " + uri + (queryString == null ? "": ("?" + queryString));
+            log.info("↓↓↓↓ Request from [{}] >>> {} ", remoteHost, queryLinge);
             long start = System.currentTimeMillis();
             filterChain.doFilter(request, response);
             long end = System.currentTimeMillis();
