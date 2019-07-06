@@ -7,5 +7,5 @@ import lombok.Setter;
 @Setter
 public class QueryRequest {
     private Integer pageSize;
-    private Integer offset;
+    private Integer currentPage;
 }

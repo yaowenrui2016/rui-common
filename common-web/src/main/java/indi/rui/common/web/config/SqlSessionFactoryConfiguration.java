@@ -24,5 +24,4 @@ public class SqlSessionFactoryConfiguration {
         bean.setMapperLocations(resolver.getResources(CLASSPATH_ALL_URL_PREFIX + "/mybatis-mappers/*Mapper.xml"));
         return bean.getObject();
     }
-
 }
