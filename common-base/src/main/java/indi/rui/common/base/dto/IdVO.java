@@ -8,4 +8,10 @@ import lombok.Setter;
 @Setter
 public class IdVO implements IFieldId {
     private String id;
+
+    public static IdVO ofId(String id) {
+        IdVO idVO = new IdVO();
+        idVO.setId(id);
+        return idVO;
+    }
 }

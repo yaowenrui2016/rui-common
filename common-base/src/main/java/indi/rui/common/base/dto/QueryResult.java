@@ -12,8 +12,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class QueryResult<T> {
-    private Integer totalSize;
-    private Integer pageSize;
-    private Integer currentPage;
+    private Integer total;
     private List<T> content;
 }

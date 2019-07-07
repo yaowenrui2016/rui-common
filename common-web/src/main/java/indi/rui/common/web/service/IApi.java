@@ -12,6 +12,5 @@ public interface IApi<V> {
     void edit(V vo);
     QueryResult<V> list(QueryRequest queryRequest);
     V get(IFieldId fieldId);
-    void delete(IFieldId fieldId);
-    void batchedDelete(IFieldIds idsVO);
+    void delete(IFieldIds fieldIds);
 }

@@ -13,6 +13,6 @@ public abstract class BaseEntity
     private String id;
     private String name;
     private Boolean state;
-    private Long createTime;
-    private Long lastModifyTime;
+    private Date createTime;
+    private Date lastModifyTime;
 }

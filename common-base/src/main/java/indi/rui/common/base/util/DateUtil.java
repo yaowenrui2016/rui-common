@@ -2,6 +2,7 @@ package indi.rui.common.base.util;
 
 import lombok.extern.slf4j.Slf4j;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -12,9 +13,25 @@ public class DateUtil {
     private static final int HOUR = 60 * 60 * 1000;
     private static final int DAY = 24 * 60 * 60 * 1000;
 
+    private static final String DEFAULT_DATE_PARTTERN = "yyyy-MM-dd HH:mm:ss";
+
     public static String now() {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat(DEFAULT_DATE_PARTTERN);
         return sdf.format(new Date());
+    }
+
+    public static Date stringToDate(String source) {
+        SimpleDateFormat sdf = new SimpleDateFormat(DEFAULT_DATE_PARTTERN);
+        try {
+            return sdf.parse(source);
+        } catch (ParseException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    public static String dateToString(Date date) {
+        SimpleDateFormat sdf = new SimpleDateFormat(DEFAULT_DATE_PARTTERN);
+        return sdf.format(date);
     }
 
     public static String duration(long timeMillis) {
