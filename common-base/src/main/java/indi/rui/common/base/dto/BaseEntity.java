@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @Getter
 @Setter
@@ -15,4 +17,6 @@ public abstract class BaseEntity
     private Boolean state;
     private Date createTime;
     private Date lastModifyTime;
+
+    private Map<String, Object> nullAbles = new HashMap<String, Object>();
 }

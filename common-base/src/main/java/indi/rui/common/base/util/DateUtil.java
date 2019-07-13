@@ -13,15 +13,19 @@ public class DateUtil {
     private static final int HOUR = 60 * 60 * 1000;
     private static final int DAY = 24 * 60 * 60 * 1000;
 
-    private static final String DEFAULT_DATE_PARTTERN = "yyyy-MM-dd HH:mm:ss";
+    private static final String DEFAULT_DATE_PATTERN = "yyyy-MM-dd HH:mm:ss";
 
     public static String now() {
-        SimpleDateFormat sdf = new SimpleDateFormat(DEFAULT_DATE_PARTTERN);
+        return now(DEFAULT_DATE_PATTERN);
+    }
+
+    public static String now(String pattern) {
+        SimpleDateFormat sdf = new SimpleDateFormat(pattern);
         return sdf.format(new Date());
     }
 
     public static Date stringToDate(String source) {
-        SimpleDateFormat sdf = new SimpleDateFormat(DEFAULT_DATE_PARTTERN);
+        SimpleDateFormat sdf = new SimpleDateFormat(DEFAULT_DATE_PATTERN);
         try {
             return sdf.parse(source);
         } catch (ParseException e) {
@@ -30,7 +34,7 @@ public class DateUtil {
     }
 
     public static String dateToString(Date date) {
-        SimpleDateFormat sdf = new SimpleDateFormat(DEFAULT_DATE_PARTTERN);
+        SimpleDateFormat sdf = new SimpleDateFormat(DEFAULT_DATE_PATTERN);
         return sdf.format(date);
     }
 

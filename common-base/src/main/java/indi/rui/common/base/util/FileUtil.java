@@ -41,21 +41,24 @@ public class FileUtil {
     /**
      * 将输入流保存到指定路径
      * @param in
-     * @param path
+     * @param filePath
      */
-    public static void save(InputStream in, String path, String filename) {
+    public static void save(InputStream in, String filePath, String fileName) {
         if (in == null) {
             return;
         }
         byte[] buf = new byte[64 * _1KB];;
         OutputStream out = null;
         try {
-            File dir = new File(path);
-            if (!dir.exists()) {
-                dir.mkdirs();
+            File path = new File(filePath);
+            if (!path.exists()) {
+                path.mkdirs();
             }
-            out = new FileOutputStream(dir.getAbsoluteFile() + File.separator + filename);
-
+            File file = new File(path, fileName);
+            if (file.exists()) {
+                throw new RuntimeException("文件已存在");
+            }
+            out = new FileOutputStream(file);
             int len;
             while ((len = in.read(buf)) > 0) {
                 out.write(buf, 0, len);
@@ -68,6 +71,15 @@ public class FileUtil {
                 out.close();
             } catch (IOException e) {
                 throw new RuntimeException(e);
+            }
+        }
+    }
+
+    public static void remove(String filePath, String fileName) {
+        File file = new File(filePath, fileName);
+        if (file.exists()) {
+            if (!file.delete()) {
+                throw new RuntimeException("文件删除失败");
             }
         }
     }

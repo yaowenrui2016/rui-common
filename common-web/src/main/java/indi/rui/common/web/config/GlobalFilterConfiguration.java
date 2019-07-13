@@ -50,7 +50,7 @@ public class GlobalFilterConfiguration {
             long start = System.currentTimeMillis();
             filterChain.doFilter(request, response);
             long end = System.currentTimeMillis();
-            log.info("↑↑↑↑ Finished request with {}s ", format.format((end - start) / 1000d));
+            log.info("↑↑↑↑ Finished request with status [{}] use {}s ",response.getStatus(), format.format((end - start) / 1000d));
         }
 
         @Override
