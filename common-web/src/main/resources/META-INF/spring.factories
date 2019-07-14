@@ -1,5 +1,8 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
     indi.rui.common.web.config.GlobalFilterConfiguration,\
     indi.rui.common.web.config.MultiDataSourceConfiguration,\
-    indi.rui.common.web.config.SqlSessionFactoryConfiguration
+    indi.rui.common.web.config.SqlSessionFactoryConfiguration,\
+    indi.rui.common.web.init.PriKeyInitializer,\
+    indi.rui.common.web.exception.GExceptionHandler
+
 

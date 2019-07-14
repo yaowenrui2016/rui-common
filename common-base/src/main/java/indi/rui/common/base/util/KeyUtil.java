@@ -3,10 +3,7 @@ package indi.rui.common.base.util;
 import lombok.extern.slf4j.Slf4j;
 import sun.misc.BASE64Encoder;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.security.*;
 import java.security.cert.Certificate;
 import java.security.spec.InvalidKeySpecException;
@@ -21,129 +18,45 @@ import java.security.spec.X509EncodedKeySpec;
  **/
 @Slf4j
 public class KeyUtil {
-    public static void exportCert() {
-        String alias = "mpr";
-        String keyStoreFile = System.getProperty("user.home") + File.separator + "mpr.keystore";
-        String exportCertFile = System.getProperty("user.home") + File.separator + "mpr.crt";
-        String password = "123456";
+    public static final int KEY_SIZE = 2048;
 
-        KeyStore keyStore = null;
-        try {
-            keyStore = KeyStore.getInstance("jks");
-            keyStore.load(new FileInputStream(keyStoreFile), password.toCharArray());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        exportCert(keyStore, alias, exportCertFile);
-    }
-
-    public static void exportCert(KeyStore keyStore, String alias, String exportFile) {
-        try {
-            Certificate certificate = keyStore.getCertificate(alias);
-            if (certificate == null) {
-                throw new RuntimeException("No such keystore item '" + alias + "'");
-            }
-            exportFile(certificate.getEncoded(), exportFile);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    public static KeyPair getKeyPair() throws Exception {
-        String alias = "mpr";
-        String keyStoreFile = System.getProperty("user.home") + File.separator + "mpr.keystore";
-        String password = "123456";
-
-        KeyStore keyStore = null;
-        try {
-            keyStore = KeyStore.getInstance("jks");
-            keyStore.load(new FileInputStream(keyStoreFile), password.toCharArray());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return getKeyPair(keyStore, alias, password.toCharArray());
-    }
-
-    public static KeyPair getKeyPair(KeyStore keyStore, String alias, char[] password) throws Exception {
-        Key key = keyStore.getKey(alias, password);
-        if (key instanceof PrivateKey) {
-            Certificate certificate = keyStore.getCertificate(alias);
-            PublicKey publicKey = certificate.getPublicKey();
-            KeyPair keyPair = new KeyPair(publicKey, (PrivateKey)key);
-            return keyPair;
-        }
-        return null;
-    }
-
-    public static void exportFile(byte[] bytes, String exportFile) throws Exception {
-        BASE64Encoder encoder = new BASE64Encoder();
-        String encodedStr = encoder.encode(bytes);
-        FileWriter fw = null;
-        try {
-            fw = new FileWriter(exportFile);
-            fw.write(encodedStr);
-        } finally {
-            if (fw != null) {
-                fw.close();
-            }
-        }
-    }
-
-    public static KeyPair generateKeyPair(int keySise) {
-        KeyPairGenerator generator = null;
-        try {
-            generator = KeyPairGenerator.getInstance("RSA");
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-        generator.initialize(keySise);
+    public static KeyPair genRsaKeyPair() throws Exception {
+        KeyPairGenerator generator = KeyPairGenerator.getInstance("RSA");
+        generator.initialize(KEY_SIZE);
         return generator.genKeyPair();
     }
 
-    public static PrivateKey getPrivateKey(String priKey) {
-        try {
-            byte[] bytes = Base64Util.decode(priKey);
-            PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(bytes);
-            KeyFactory keyFactory = KeyFactory.getInstance("RSA");
-            PrivateKey privateKey = keyFactory.generatePrivate(keySpec);
-            return privateKey;
-        } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
-        }
+    public static PrivateKey buildRsaPriKey(String priKey) throws Exception {
+        byte[] bytes = Base64Util.decode(priKey);
+        PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(bytes);
+        return KeyFactory.getInstance("RSA").generatePrivate(keySpec);
     }
 
-    public static PublicKey getPublicKey(String pubKey) throws IOException {
+    public static PublicKey buildRsaPubKey(String pubKey) throws Exception {
         byte[] bytes = Base64Util.decode(pubKey);
         X509EncodedKeySpec keySpec = new X509EncodedKeySpec(bytes);
-        PublicKey publicKey;
-        try {
-            KeyFactory keyFactory = KeyFactory.getInstance("RSA");
-            publicKey = keyFactory.generatePublic(keySpec);
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e.getMessage());
-        } catch (InvalidKeySpecException e) {
-            throw new RuntimeException(e.getMessage());
-        }
-        return publicKey;
+        return KeyFactory.getInstance("RSA").generatePublic(keySpec);
     }
 
-    public static void main(String[] arsg) throws Exception {
-        // 输出证书
-        exportCert();
 
-        // 获取KeyPair
-        KeyPair keyPair = getKeyPair();
+    public static void main(String[] args) throws Exception {
+        KeyPair keyPair = KeyUtil.genRsaKeyPair();
+        PrivateKey priKey = keyPair.getPrivate();
+//        PublicKey pubKey = keyPair.getPublic();
+        String priKeyStr = Base64Util.encode(priKey.getEncoded());
+        log.info("\n{}", priKeyStr);
 
-        // 输出PriKey
-        String exportPriKey = System.getProperty("user.home") + File.separator + "priKey.txt";
-        PrivateKey privateKey = keyPair.getPrivate();
-        exportFile(privateKey.getEncoded(), exportPriKey);
-
-        // 输出PubKey
-        String exportPubKey = System.getProperty("user.home") + File.separator + "pubKey.txt";
-        PublicKey publicKey = keyPair.getPublic();
-        exportFile(publicKey.getEncoded(), exportPubKey);
+//        String path = "./tmp/keyfile/";
+//        String fileName = "priKey";
+//        FileUtil.save(new ByteArrayInputStream(priKeyStr.getBytes()), path, fileName);
+//        Thread.sleep(2000);
+//
+//        FileInputStream in = new FileInputStream(new File(path, fileName));
+//        byte[] buf = new byte[in.available()];
+//        in.read(buf);
+//        String priKeyStr2 = new String(buf);
+//        log.info("\n{}\n", priKeyStr2);
+//
+//        log.info("{}", priKeyStr.equals(priKeyStr2));
     }
-
 }

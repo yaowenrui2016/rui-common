@@ -27,6 +27,11 @@ public final class  Response<T> {
         this.data = data;
     }
 
+    public Response(String status, String message) {
+        this.status = status;
+        this.message = message;
+    }
+
     public static Response ok() {
         return new Response(DefaultStatus.SUCCESS, null);
     }
@@ -39,8 +44,12 @@ public final class  Response<T> {
         return new Response(DefaultStatus.EXCEPTION);
     }
 
-    public static Response response(Status status) {
+    public static Response res(Status status) {
         return new Response(status);
+    }
+
+    public static Response res(String status, String message) {
+        return new Response(status, message);
     }
 
     enum DefaultStatus implements Status {
