@@ -21,7 +21,7 @@ public class DateTypeHandler extends BaseTypeHandler<Date> {
     public Date getNullableResult(ResultSet rs, String columnName) throws SQLException {
         String date = rs.getString(columnName);
         if (date != null) {
-            return DateUtil.stringToDate(date);
+            return DateUtil.toDate(date);
         }
         return null;
     }
@@ -30,7 +30,7 @@ public class DateTypeHandler extends BaseTypeHandler<Date> {
     public Date getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
         String date = rs.getString(columnIndex);
         if (date != null) {
-            return DateUtil.stringToDate(date);
+            return DateUtil.toDate(date);
         }
         return null;
     }
@@ -39,7 +39,7 @@ public class DateTypeHandler extends BaseTypeHandler<Date> {
     public Date getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
         String date = cs.getString(columnIndex);
         if (date != null) {
-            return DateUtil.stringToDate(date);
+            return DateUtil.toDate(date);
         }
         return null;
     }

@@ -24,16 +24,16 @@ public class DateUtil {
         return sdf.format(new Date());
     }
 
-    public static Date stringToDate(String source) {
+    public static Date toDate(String dateStr) {
         SimpleDateFormat sdf = new SimpleDateFormat(DEFAULT_DATE_PATTERN);
         try {
-            return sdf.parse(source);
+            return sdf.parse(dateStr);
         } catch (ParseException e) {
             throw new RuntimeException(e.getMessage());
         }
     }
 
-    public static String dateToString(Date date) {
+    public static String toString(Date date) {
         SimpleDateFormat sdf = new SimpleDateFormat(DEFAULT_DATE_PATTERN);
         return sdf.format(date);
     }

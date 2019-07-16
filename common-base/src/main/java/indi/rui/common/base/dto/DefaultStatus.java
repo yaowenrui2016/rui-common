@@ -2,7 +2,8 @@ package indi.rui.common.base.dto;
 
 public enum DefaultStatus implements Status {
     SUCCESS     ("00000000", "操作成功"),
-    EXCEPTION   ("99999999", "系统异常");
+    EXCEPTION   ("99999999", "系统异常"),
+    RECORD_NOT_EXISTS("01001001", "记录不存在");
 
     private String code;
     private String message;
