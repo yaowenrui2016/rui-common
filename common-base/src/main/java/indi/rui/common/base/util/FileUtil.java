@@ -79,6 +79,23 @@ public class FileUtil {
         return sb.toString();
     }
 
+    public static void deleteDir(String path) {
+        File dir = new File(path);
+        if (dir.exists()) {
+            File[] subFiles = dir.listFiles();
+            if (subFiles != null && subFiles.length > 0) {
+                for (File subFile : subFiles) {
+                    if (subFile.isDirectory()) {
+                        deleteDir(subFile.getAbsolutePath());
+                    } else {
+                        subFile.delete();
+                    }
+                }
+            }
+            dir.delete();
+        }
+    }
+
     public static void remove(String filePath, String fileName) {
         File file = new File(filePath, fileName);
         if (file.exists()) {

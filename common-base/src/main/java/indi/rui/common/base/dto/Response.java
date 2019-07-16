@@ -27,7 +27,7 @@ public final class  Response<T> {
         this.data = data;
     }
 
-    public Response(String status, String message) {
+    private Response(String status, String message) {
         this.status = status;
         this.message = message;
     }
@@ -44,32 +44,11 @@ public final class  Response<T> {
         return new Response(DefaultStatus.EXCEPTION);
     }
 
-    public static Response res(Status status) {
-        return new Response(status);
+    public static Response res(Status status, String message) {
+        return new Response(status.getCode(), message);
     }
 
     public static Response res(String status, String message) {
         return new Response(status, message);
-    }
-
-    enum DefaultStatus implements Status {
-        SUCCESS     ("00000000", "操作成功"),
-        EXCEPTION   ("99999999", "服务器异常");
-
-        private String code;
-        private String message;
-
-        DefaultStatus(String code, String message) {
-            this.code = code;
-            this.message = message;
-        }
-
-        public String getCode() {
-            return this.code;
-        }
-
-        public String getMessage() {
-            return this.message;
-        }
     }
 }
