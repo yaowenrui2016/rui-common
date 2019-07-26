@@ -17,25 +17,25 @@ public class AbstractService{
      * @param <T>
      * @return
      */
-    protected <S, T> T copyProperties(S source, Class<T> klass) {
+    protected <S, T> T copyProperties(S source, Class<T> klass, String... ignoreProperties) {
         try {
             Assert.notNull(source, "source不能为空");
             Assert.notNull(klass, "class不能为空");
             T target = klass.newInstance();
-            BeanUtils.copyProperties(source, target);
+            BeanUtils.copyProperties(source, target, ignoreProperties);
             return target;
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
     }
 
-    protected <S, T> List<T> copyPropertiesForList(List<S> sources, Class<T> klass) {
+    protected <S, T> List<T> copyPropertiesForList(List<S> sources, Class<T> klass, String... ignoreProperties) {
         List<T> targets = new ArrayList<>();
         if (CollectionUtils.isEmpty(sources)) {
             return targets;
         }
         for (S source : sources) {
-            targets.add(copyProperties(source, klass));
+            targets.add(copyProperties(source, klass, ignoreProperties));
         }
         return targets;
     }

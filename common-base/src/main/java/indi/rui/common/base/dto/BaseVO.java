@@ -12,10 +12,9 @@ import java.util.Map;
 @Getter
 @Setter
 public abstract class BaseVO
-        implements IFieldId, IFieldName, IFieldState, IFieldCreateTime, IFieldLastModifyTime {
+        implements IFieldId, IFieldName, IFieldCreateTime, IFieldLastModifyTime {
     private String id;
     private String name;
-    private Boolean state;
     private Date createTime;
     private Date lastModifyTime;
     @JsonIgnore
