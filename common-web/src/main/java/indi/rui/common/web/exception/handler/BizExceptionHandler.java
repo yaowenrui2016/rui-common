@@ -12,16 +12,19 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class BizExceptionHandler {
     @ExceptionHandler
     public Response handleBizException(BizException be) {
+        log.error(be.getMessage());
         return Response.res(be.getCode(), be.getMessage());
     }
 
     @ExceptionHandler
     public Response handleRuntimeException(RuntimeException re) {
+        log.error(re.getMessage());
         return Response.res(DefaultStatus.EXCEPTION, re.getMessage());
     }
 
     @ExceptionHandler
     public Response handleException(Exception e) {
+        log.error(e.getMessage());
         return Response.error();
     }
 }
