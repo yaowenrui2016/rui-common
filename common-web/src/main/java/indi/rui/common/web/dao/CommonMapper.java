@@ -5,7 +5,7 @@ import indi.rui.common.base.field.IFieldId;
 
 import java.util.List;
 
-public interface CommonMapper<Entity> {
+public interface CommonMapper<Entity> extends IMapper {
     void add(Entity entity);
     void update(Entity entity);
     Integer findTotalNum(QueryRequest queryRequest);

@@ -27,11 +27,11 @@ public class PrintFilter implements Filter {
         String remoteHost = request.getRemoteHost();
         String queryString = request.getQueryString();
         String queryLinge =  method + " " + uri + (queryString == null ? "": ("?" + queryString));
-        log.info("↓↓↓↓ Request from [{}] >>> {} ", remoteHost, queryLinge);
+        log.debug("↓↓↓↓ Request from [{}] >>> {} ", remoteHost, queryLinge);
         long start = System.currentTimeMillis();
         filterChain.doFilter(request, response);
         long end = System.currentTimeMillis();
-        log.info("↑↑↑↑ Finished request with status [{}] use {}s ",response.getStatus(), format.format((end - start) / 1000d));
+        log.debug("↑↑↑↑ Finished request with status [{}] use {}s ",response.getStatus(), format.format((end - start) / 1000d));
     }
 
     @Override

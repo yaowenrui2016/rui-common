@@ -1,6 +1,6 @@
 package indi.rui.common.base.dto;
 
-public enum DefaultStatus implements Status {
+public enum DefaultStatus implements Status, IEnum {
     SUCCESS     ("00000000", "操作成功"),
     EXCEPTION   ("99999999", "系统异常"),
     RECORD_NOT_EXISTS("01001001", "记录不存在");
@@ -19,5 +19,10 @@ public enum DefaultStatus implements Status {
 
     public String getMessage() {
         return this.message;
+    }
+
+    @Override
+    public String getValue() {
+        return this.code + ":" + this.message;
     }
 }

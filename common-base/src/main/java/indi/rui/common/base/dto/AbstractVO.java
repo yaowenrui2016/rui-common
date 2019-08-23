@@ -11,7 +11,7 @@ import java.util.Map;
 
 @Getter
 @Setter
-public abstract class BaseVO
+public abstract class AbstractVO
         implements IFieldId, IFieldName, IFieldCreateTime, IFieldLastModifyTime {
     private String id;
     private String name;
