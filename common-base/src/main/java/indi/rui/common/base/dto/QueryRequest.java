@@ -8,10 +8,10 @@ import java.util.Map;
 
 @Getter
 @Setter
-public class QueryRequest {
+public class QueryRequest<V> {
     private Integer pageSize;
     private Integer current;
-    private Map<String,Object> conditions = new HashMap<String, Object>();
+    private V conditions;
     private Map<String, Object> sorters = new HashMap<String, Object>();
 
     public Integer getOffset() {

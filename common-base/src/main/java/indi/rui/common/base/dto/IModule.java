@@ -1,5 +1,5 @@
 package indi.rui.common.base.dto;
 
-public interface IEntity {
+public interface IModule {
     String getModule();
 }

@@ -5,7 +5,7 @@ import indi.rui.common.base.field.IFieldId;
 import indi.rui.common.base.field.IFieldIds;
 import indi.rui.common.base.util.RandomUtil;
 import indi.rui.common.base.util.StringUtil;
-import indi.rui.common.web.dao.CommonMapper;
+import indi.rui.common.web.dao.IMapper;
 import indi.rui.common.web.util.BeanUtil;
 import indi.rui.common.web.util.ReflectUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Slf4j
-public abstract class AbstractService<M extends CommonMapper, E extends AbstractEntity, V extends AbstractVO> implements IApi<V> {
+public abstract class AbstractService<M extends IMapper, E extends AbstractEntity, V extends AbstractVO> implements IApi<V> {
     protected M mapper;
 
     @Override
