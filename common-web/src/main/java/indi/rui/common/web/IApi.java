@@ -1,4 +1,4 @@
-package indi.rui.common.web.service;
+package indi.rui.common.web;
 
 import indi.rui.common.base.dto.QueryRequest;
 import indi.rui.common.base.dto.QueryResult;

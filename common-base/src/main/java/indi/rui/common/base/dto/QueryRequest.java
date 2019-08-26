@@ -8,7 +8,7 @@ import java.util.Map;
 
 @Getter
 @Setter
-public class QueryRequest<V> {
+public class QueryRequest<V extends IData> {
     private Integer pageSize;
     private Integer current;
     private V conditions;

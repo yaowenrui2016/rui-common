@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface IMapper<E> {
     void add(E e);
+    void add(List<E> entities);
     void update(E e);
     Integer findTotalNum(QueryRequest queryRequest);
     List<E> findAll(QueryRequest queryRequest);

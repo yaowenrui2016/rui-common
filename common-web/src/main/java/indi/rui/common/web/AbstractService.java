@@ -1,4 +1,4 @@
-package indi.rui.common.web.service;
+package indi.rui.common.web;
 
 import indi.rui.common.base.dto.*;
 import indi.rui.common.base.field.IFieldId;
@@ -29,25 +29,31 @@ public abstract class AbstractService<M extends IMapper, E extends AbstractEntit
     @Transactional
     @Override
     public void edit(V vo) {
-
+        E entity = BeanUtil.copyProperties(vo, getEntityClass());
+        mapper.update(entity);
     }
 
     @Override
     public QueryResult<V> list(QueryRequest queryRequest) {
         Integer total = mapper.findTotalNum(queryRequest);
-        List<E> entitys = mapper.findAll(queryRequest);
-        List<V> vos = BeanUtil.copyPropertiesForList(entitys, getVoClass());
+        List<E> entities = mapper.findAll(queryRequest);
+        List<V> vos = BeanUtil.copyPropertiesForList(entities, getVoClass());
         return new QueryResult<>(total, vos);
     }
 
     @Override
     public V get(IFieldId fieldId) {
-        return null;
+        return BeanUtil.copyProperties(mapper.findById(fieldId), getVoClass());
     }
 
     @Override
     public void delete(IFieldIds fieldIds) {
-
+        List<String> ids = fieldIds.getIds();
+        if (ids != null && !ids.isEmpty()) {
+            for (String id : ids) {
+                mapper.delete(IdVO.ofId(id));
+            }
+        }
     }
 
     protected Class<E> getEntityClass() {
