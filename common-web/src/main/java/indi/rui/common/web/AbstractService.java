@@ -4,6 +4,7 @@ import indi.rui.common.base.dto.*;
 import indi.rui.common.base.field.IFieldId;
 import indi.rui.common.base.field.IFieldIds;
 import indi.rui.common.base.util.RandomUtil;
+import indi.rui.common.base.util.SnowflakeIDGenerator;
 import indi.rui.common.base.util.StringUtil;
 import indi.rui.common.web.dao.IMapper;
 import indi.rui.common.web.util.BeanUtil;
@@ -21,7 +22,7 @@ public abstract class AbstractService<M extends IMapper, E extends AbstractEntit
     public void add(V vo) {
         E entity = BeanUtil.copyProperties(vo, getEntityClass());
         if (StringUtil.isEmpty(entity.getId())) {
-            entity.setId(RandomUtil.uuid());
+            entity.setId(String.valueOf(SnowflakeIDGenerator.genId()));
         }
         mapper.add(entity);
     }

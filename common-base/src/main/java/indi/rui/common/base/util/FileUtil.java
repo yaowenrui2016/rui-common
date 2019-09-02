@@ -96,6 +96,31 @@ public class FileUtil {
         }
     }
 
+    public static void write(String content, String path, String filename) {
+        File pf = new File(path);
+        if (!pf.exists()) {
+            pf.mkdirs();
+        }
+        OutputStreamWriter writer = null;
+        try {
+            File file = new File(pf, filename);
+            FileOutputStream fos = new FileOutputStream(file, true);
+            writer = new OutputStreamWriter(fos, "utf-8");
+            writer.write(content);
+            writer.flush();
+        } catch (IOException e) {
+            throw new RuntimeException(e.getMessage());
+        } finally {
+            if (writer != null) {
+                try {
+                    writer.close();
+                } catch (IOException e) {
+                    throw new RuntimeException(e.getMessage());
+                }
+            }
+        }
+    }
+
     public static void remove(String filePath, String fileName) {
         File file = new File(filePath, fileName);
         if (file.exists()) {
