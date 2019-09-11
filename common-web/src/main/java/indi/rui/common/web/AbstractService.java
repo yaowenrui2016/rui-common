@@ -1,23 +1,28 @@
 package indi.rui.common.web;
 
+import java.util.List;
+
+import org.springframework.transaction.annotation.Transactional;
+
 import indi.rui.common.base.dto.*;
 import indi.rui.common.base.field.IFieldId;
 import indi.rui.common.base.field.IFieldIds;
-import indi.rui.common.base.util.RandomUtil;
 import indi.rui.common.base.util.SnowflakeIDGenerator;
 import indi.rui.common.base.util.StringUtil;
 import indi.rui.common.web.dao.IMapper;
 import indi.rui.common.web.util.BeanUtil;
 import indi.rui.common.web.util.ReflectUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Slf4j
-public abstract class AbstractService<M extends IMapper, E extends AbstractEntity, V extends AbstractVO> implements IApi<V> {
+public abstract class AbstractService<M extends IMapper<E>, E extends AbstractEntity, V extends AbstractVO>
+    implements IApi<V> {
+    /**
+     * 当前模型的mapper，由子类来注入
+     */
     protected M mapper;
 
+    @Transactional
     @Override
     public void add(V vo) {
         E entity = BeanUtil.copyProperties(vo, getEntityClass());
@@ -35,18 +40,22 @@ public abstract class AbstractService<M extends IMapper, E extends AbstractEntit
     }
 
     @Override
-    public QueryResult<V> list(QueryRequest queryRequest) {
-        Integer total = mapper.findTotalNum(queryRequest);
-        List<E> entities = mapper.findAll(queryRequest);
-        List<V> vos = BeanUtil.copyPropertiesForList(entities, getVoClass());
-        return new QueryResult<>(total, vos);
+    public QueryResult<V> list(QueryRequest request) {
+        Integer total = mapper.findTotalNum(request);
+        List<V> vos = BeanUtil.copyPropertiesForList(mapper.findAll(request), getVoClass());
+        return new QueryResult<>(request.getPageSize(), request.getCurrent(), total, vos);
     }
 
     @Override
     public V get(IFieldId fieldId) {
-        return BeanUtil.copyProperties(mapper.findById(fieldId), getVoClass());
+        E entity = mapper.findById(fieldId);
+        if (entity == null) {
+            return null;
+        }
+        return BeanUtil.copyProperties(entity, getVoClass());
     }
 
+    @Transactional
     @Override
     public void delete(IFieldIds fieldIds) {
         List<String> ids = fieldIds.getIds();
@@ -58,12 +67,16 @@ public abstract class AbstractService<M extends IMapper, E extends AbstractEntit
     }
 
     protected Class<E> getEntityClass() {
-        return (Class<E>) ReflectUtil.getActualType(this.getClass(), "E");
+        return (Class<E>)ReflectUtil.getActualType(this.getClass(), "E");
     }
 
     protected Class<V> getVoClass() {
-        return (Class<V>) ReflectUtil.getActualType(this.getClass(), "V");
+        return (Class<V>)ReflectUtil.getActualType(this.getClass(), "V");
     }
 
+    /**
+     * 由子类来注入
+     * @param mapper
+     */
     protected abstract void setMapper(M mapper);
 }

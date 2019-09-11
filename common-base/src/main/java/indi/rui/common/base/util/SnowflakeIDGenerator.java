@@ -67,13 +67,9 @@ public class SnowflakeIDGenerator {
     }
 
 // ==============================Statics==========================================
-    public static long genId(long workerId, long datacenterId) {
-        SnowflakeIDGenerator gen = new SnowflakeIDGenerator(workerId, datacenterId);
-        return gen.nextId();
-    }
-
+    private static SnowflakeIDGenerator gen = new SnowflakeIDGenerator(0,0);
     public static long genId() {
-        return genId(0, 0);
+        return gen.nextId();
     }
 
 

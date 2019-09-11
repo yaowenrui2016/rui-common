@@ -19,7 +19,7 @@ public class BizExceptionHandler {
     @ExceptionHandler
     public Response handleRuntimeException(RuntimeException re) {
         log.error(re.getMessage(), re);
-        return Response.res(DefaultStatus.EXCEPTION, re.getMessage());
+        return Response.error();
     }
 
     @ExceptionHandler
