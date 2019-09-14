@@ -1,17 +1,17 @@
 package indi.rui.common.base.dto;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import java.util.HashMap;
 import java.util.Map;
+
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * 查询请求封装类
  */
 @Getter
 @Setter
-public class QueryRequest<V extends AbstractVO> {
+public class QueryRequest {
     /**
      * 页面条数
      */
@@ -25,7 +25,7 @@ public class QueryRequest<V extends AbstractVO> {
     /**
      * 过滤条件
      */
-    private V conditions;
+    private Map<String, Object> conditions = new HashMap<>();
 
     /**
      * 排序字段
