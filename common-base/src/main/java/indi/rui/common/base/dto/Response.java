@@ -41,11 +41,15 @@ public final class  Response<T> {
     }
 
     public static Response error() {
-        return new Response(DefaultStatus.EXCEPTION);
+        return res(DefaultStatus.EXCEPTION);
     }
 
-    public static Response res(Status status, String message) {
-        return new Response(status.getCode(), message);
+    public static Response fail() {
+        return res(DefaultStatus.FAILED);
+    }
+
+    public static Response res(Status status) {
+        return new Response(status);
     }
 
     public static Response res(String status, String message) {
