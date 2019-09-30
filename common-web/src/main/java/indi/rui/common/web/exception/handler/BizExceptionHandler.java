@@ -1,5 +1,6 @@
 package indi.rui.common.web.exception.handler;
 
+import indi.rui.common.web.exception.NoPermissionException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -8,11 +9,15 @@ import indi.rui.common.base.dto.Response;
 import indi.rui.common.web.exception.BizException;
 import lombok.extern.slf4j.Slf4j;
 
+
 @Slf4j
 @RestControllerAdvice
 public class BizExceptionHandler {
     @ExceptionHandler
     public Response handleBizException(BizException e) {
+        if (e instanceof NoPermissionException) {
+            throw e;
+        }
         log.error(e.getMessage(), e);
         return Response.res(e.getCode(), e.getMessage());
     }
