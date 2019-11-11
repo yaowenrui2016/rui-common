@@ -1,4 +1,4 @@
-package indi.rui.common.web.util;
+package indi.rui.common.base.util;
 
 import java.lang.annotation.Annotation;
 import java.util.Set;
@@ -12,7 +12,7 @@ import org.reflections.util.ConfigurationBuilder;
 
 public class AnnotationScanUtil {
 
-    public static Set<Class<?>> findTypesAnnotationedWith(Class baseClass, Class<Annotation> annotationClass) {
+    public static Set<Class<?>> findTypesAnnotationedWith(Class baseClass, Class<? extends Annotation> annotationClass) {
         Reflections reflections = new Reflections(ConfigurationBuilder.build(
                 baseClass,
                 new TypeElementsScanner(),
